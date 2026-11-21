@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Obsidian 官方技能",
+    "description": "加入 Obsidian 官方的 7 个 Agent Skills：Obsidian 风格 Markdown、Bases、JSON Canvas、Obsidian CLI、Obsidian Headless、Defuddle 和 Knap。在「插件」页的插件详情中显示内置的上游技能版本，检查 obsidianmd/obsidian-skills 的最新 GitHub Release，并可更新到该 Release。更新会整树替换技能目录，因此新增、修改和删除都与 Release 一致。技能本身只提供说明；其中提到的命令仍需要对应工具与权限。"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "name": "obsidian-skills-for-dsh",
+  "version": "1.2.1",
+  "description": "Obsidian's official agent skills for DeepSeek Harness: Markdown, Bases, Canvas, CLI, Headless, Defuddle, and Knap.",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.png"
+  },
+  "icon": "./icon.png",
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "skills",
+    "scripts",
+    "locale/*.json",
+    "icon.png",
+    "upstream.json",
+    "README*.md",
+    "CONTRIBUTORS.md",
+    "LICENSE",
+    "LICENSE.upstream",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "test": "node --test test/plugin.test.mjs test/sync-upstream.test.mjs test/update.test.mjs",
+    "check": "node --check index.js && npm test",
+    "sync:upstream": "node scripts/sync-upstream.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WangJingJun-dev/obsidian-skills-for-dsh.git"
+  },
+  "homepage": "https://github.com/WangJingJun-dev/obsidian-skills-for-dsh#readme",
+  "bugs": {
+    "url": "https://github.com/WangJingJun-dev/obsidian-skills-for-dsh/issues"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "obsidian",
+    "agent-skills",
+    "markdown",
+    "bases",
+    "canvas"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.0-rc.2 || >=0.2.1-rc.2 || >=0.2.2-rc.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-skill": ">=0.2.0-rc.2 || >=0.2.1-rc.2 || >=0.2.2-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-skill": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "yaml": "^2.4.2"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "packageManager": "pnpm@11.28.5"
+}

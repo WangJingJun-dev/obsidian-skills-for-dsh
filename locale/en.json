@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Obsidian skills",
+    "description": "Adds Obsidian's official agent skills for Obsidian Flavored Markdown, Bases, JSON Canvas, the Obsidian CLI, Obsidian Headless, Defuddle, and Knap. The plugin detail page shows the included upstream skill version, checks the latest obsidianmd/obsidian-skills GitHub Release, and can update to that release. The update replaces the complete skill tree so additions, edits, and deletions match the release. Skills are instructions only; commands still need their own tools and permissions."
+  }
+}

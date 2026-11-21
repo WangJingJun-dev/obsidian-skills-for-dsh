@@ -1,0 +1,73 @@
+name: Sync Obsidian skills
+
+on:
+  schedule:
+    - cron: '43 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: obsidian-skills-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/checkout@v4
+        with:
+          repository: obsidianmd/obsidian-skills
+          ref: main
+          path: upstream
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.5
+
+      - name: Check upstream release
+        id: check
+        shell: bash
+        run: |
+          node scripts/sync-upstream.mjs --source "$GITHUB_WORKSPACE/upstream" --check > "$RUNNER_TEMP/upstream-check.json"
+          cat "$RUNNER_TEMP/upstream-check.json"
+          echo "update=$(node -p "require('$RUNNER_TEMP/upstream-check.json').update")" >> "$GITHUB_OUTPUT"
+          echo "version=$(node -p "require('$RUNNER_TEMP/upstream-check.json').upstreamVersion")" >> "$GITHUB_OUTPUT"
+
+      - name: Sync newer skills
+        if: steps.check.outputs.update == 'true'
+        run: node scripts/sync-upstream.mjs --source "$GITHUB_WORKSPACE/upstream"
+
+      - name: Install test dependencies
+        if: steps.check.outputs.update == 'true'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Test before release
+        if: steps.check.outputs.update == 'true'
+        run: pnpm test
+
+      - name: Verify packed files
+        if: steps.check.outputs.update == 'true'
+        run: npm pack --dry-run
+
+      - name: Commit and tag release
+        if: steps.check.outputs.update == 'true'
+        env:
+          VERSION: ${{ steps.check.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package.json upstream.json skills LICENSE.upstream pnpm-lock.yaml
+          git commit -m "chore: sync Obsidian skills v${VERSION}"
+          git tag "v${VERSION}"
+          git push origin HEAD:main
+          git push origin "v${VERSION}"
