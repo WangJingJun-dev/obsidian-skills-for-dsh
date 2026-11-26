@@ -8,13 +8,17 @@
 
 Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：复用官方技能原文，增加 DSH 插件清单、上游版本检查和整树更新。
 
+## 与上游对齐
+
+截至上游 `1.2.3`，官方 README 列出的插件入口包括 Claude、ChatGPT/Codex、Cursor、Grok Bot 和 Hermes Agent；安装说明还覆盖 Claude Code、Codex、npx skills、Gemini CLI 与 OpenCode。客户端支持范围会随上游变化，请以[上游安装说明](https://github.com/obsidianmd/obsidian-skills#installation)为准。本仓库不复制这些客户端配置，只补齐 DeepSeek Harness。
+
 ## 特点
 
-- **轻量**：仅注册 7 个技能，不启动外部进程。
-- **仅打包**：不捆绑 Obsidian、Defuddle、Knap 等命令行工具。
+- **轻量**：仅注册上游提供的技能，不启动外部进程。
+- **使用本机工具**：不捆绑 CLI 二进制；技能会通过 DSH 会话调用本机已安装的 `obsidian`、`ob`、`defuddle`、`knap`。
 - **干净**：无 MCP、无后台常驻、无遥测、无凭据；只有检查或更新时访问 GitHub。
 - **可追溯**：记录内置上游版本和对应 commit。
-- **可更新**：详情页检查上游 GitHub Release，并可更新到所选版本。
+- **可更新**：详情页检查上游 GitHub Release，并可更新到所选版本；新增技能会随整树同步加入。
 
 ## 包含技能
 
@@ -28,7 +32,7 @@ Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：�
 | `defuddle` | 从网页提取干净的 Markdown |
 | `knap` | 用 JSON/CSV 数据渲染 Markdown 模板 |
 
-技能仅包含说明，不包含实际工具。`obsidian`、`ob`、`defuddle`、`knap` 需要单独安装，并遵守当前 DSH 会话的权限和审批规则。
+技能文件不包含工具本身。实际使用时，DSH 会通过当前会话的 shell 或已有原生工具调用本机安装的 `obsidian`、`ob`、`defuddle`、`knap`；这些调用受 DSH 权限和审批约束。
 
 ## 安装
 
@@ -60,10 +64,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## 来源与许可
 
-上游：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)，MIT License。
-
-插件图标来自上游 `plugins/obsidian/assets/icon.png`，保留透明背景。图标文件包含在采用 MIT 许可的上游仓库中，但 Obsidian 名称、Logo 和应用图标是商标；根据 [Obsidian 品牌指南](https://obsidian.md/brand)，不得编辑、改色或变形，商业用途需联系 Obsidian。本项目为非官方插件，与 Obsidian 无隶属关系，也未获其背书。
-
-本插件只负责打包和更新，不修改上游技能正文。完整版权信息见 [LICENSE.upstream](LICENSE.upstream) 和 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+上游：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)，MIT License；完整许可见 [LICENSE.upstream](LICENSE.upstream)。本插件只打包技能，不修改上游正文。图标取自上游原始素材；Obsidian 名称和图标是 Dynalist Inc. 的商标，本项目为非官方项目。
 
 开发过程中使用了 DeepSeek 协助；署名和 GitHub Contributors 的限制见 [CONTRIBUTORS.md](CONTRIBUTORS.md)。

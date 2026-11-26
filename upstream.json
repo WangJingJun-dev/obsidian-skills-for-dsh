@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/obsidianmd/obsidian-skills",
-  "version": "1.2.1",
-  "commit": "b110b2f8e9eb1f287892f937050dfd40af862cbb",
+  "version": "1.2.3",
+  "commit": "a53f5910cd68e7bad88ea52f2f4eb95b9aa40800",
   "sourcePath": "plugins/obsidian",
-  "syncedAt": "2026-11-21T07:50:40.812Z"
+  "syncedAt": "2026-11-26T05:28:01.846Z"
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
@@ -15,15 +15,10 @@ import {
 } from '../index.js'
 
 const packageRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const expectedSkills = [
-  'defuddle',
-  'json-canvas',
-  'knap',
-  'obsidian-bases',
-  'obsidian-cli',
-  'obsidian-headless',
-  'obsidian-markdown',
-]
+const expectedSkills = readdirSync(join(packageRoot, 'skills'), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+  .map((entry) => entry.name)
+  .sort((left, right) => left.localeCompare(right, 'en'))
 
 function loadProvider() {
   let factory
@@ -49,7 +44,7 @@ test('registers all packaged upstream skills with working resource paths', async
   assert.equal(provider.name, 'obsidian-skills')
   const candidates = await provider.list()
   assert.deepEqual(candidates.map((candidate) => candidate.name).sort(), expectedSkills)
-  assert.equal(candidates.length, 7)
+  assert.ok(candidates.length > 0)
 
   for (const candidate of candidates) {
     assert.equal(candidate.provider, 'obsidian-skills')
@@ -113,12 +108,15 @@ test('compares and exposes the bundled upstream release', () => {
   assert.throws(() => compareVersions('v1.2.1', '1.2.1'), /invalid version/)
 
   const bundled = readBundledUpstream()
-  assert.equal(bundled.version, '1.2.1')
+  assert.match(bundled.version, /^\d+\.\d+\.\d+$/)
   assert.match(bundled.commit, /^[0-9a-f]{40}$/)
   assert.equal(bundled.repository, 'https://github.com/obsidianmd/obsidian-skills')
 })
 
 test('reports a newer upstream release from the mocked GitHub response', async () => {
+  const bundled = readBundledUpstream()
+  const [major, minor, patch] = bundled.version.split('.').map(Number)
+  const nextVersion = `${major}.${minor}.${patch + 1}`
   const checkedAt = Date.UTC(2026, 10, 21, 7, 30, 0)
   const status = await readUpstreamStatus({
     refresh: true,
@@ -128,17 +126,17 @@ test('reports a newer upstream release from the mocked GitHub response', async (
       status: 200,
       async json() {
         return {
-          tag_name: 'v1.2.2',
+          tag_name: `v${nextVersion}`,
           published_at: '2026-11-20T19:22:47Z',
-          html_url: 'https://github.com/obsidianmd/obsidian-skills/releases/tag/1.2.2',
+          html_url: `https://github.com/obsidianmd/obsidian-skills/releases/tag/${nextVersion}`,
         }
       },
     }),
   })
 
   assert.equal(status.ok, true)
-  assert.equal(status.bundled.version, '1.2.1')
-  assert.equal(status.latest.version, '1.2.2')
+  assert.equal(status.bundled.version, bundled.version)
+  assert.equal(status.latest.version, nextVersion)
   assert.equal(status.updateAvailable, true)
   assert.equal(status.status, 'update-available')
   assert.equal(status.checkedAt, new Date(checkedAt).toISOString())

@@ -1,8 +1,9 @@
 # Third-party notices
 
 The packaged skills under `skills/` come from
-[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills),
-package version 1.2.1, commit `b110b2f8e9eb1f287892f937050dfd40af862cbb`.
+[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)
+under the MIT License. The exact bundled version and commit are recorded in
+`upstream.json`.
 
 They are licensed under the MIT License. The upstream copyright notice is
 reproduced in `LICENSE.upstream`.

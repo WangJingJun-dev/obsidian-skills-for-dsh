@@ -8,13 +8,17 @@ A lightweight DeepSeek Harness plugin for the [official Obsidian agent skills](h
 
 Obsidian does not currently provide a DeepSeek Harness plugin. This repository fills that gap: it reuses the official skill text and adds the DSH bundle manifest, upstream version checks, and full-tree updates.
 
+## Alignment with upstream
+
+As of upstream `1.2.3`, the official README lists plugin entries for Claude, ChatGPT/Codex, Cursor, Grok Bot, and Hermes Agent. Its installation guide also covers Claude Code, Codex, npx skills, Gemini CLI, and OpenCode. The supported client set changes with upstream releases; use the [upstream installation guide](https://github.com/obsidianmd/obsidian-skills#installation) as the source of truth. This repository does not copy those client configurations; it only adds the DeepSeek Harness entry.
+
 ## Highlights
 
-- **Lightweight**: registers seven skills and starts no external process.
-- **Skills only**: does not bundle the Obsidian, Defuddle, or Knap command-line tools.
+- **Lightweight**: registers the upstream skills and starts no external process.
+- **Uses local tools**: does not bundle CLI binaries; skills call the locally installed `obsidian`, `ob`, `defuddle`, and `knap` through the DSH session.
 - **Clean**: no MCP server, background daemon, telemetry, or credentials; GitHub is contacted only for version checks or updates.
 - **Traceable**: records the included upstream version and commit.
-- **Updatable**: checks the latest upstream GitHub Release and can update to that release.
+- **Updatable**: checks the latest upstream GitHub Release and can update to that release; new skills arrive with the full-tree sync.
 
 ## Included skills
 
@@ -28,7 +32,7 @@ Obsidian does not currently provide a DeepSeek Harness plugin. This repository f
 | `defuddle` | Extract clean Markdown from web pages |
 | `knap` | Render Markdown templates from JSON or CSV data |
 
-The skills contain instructions only and do not include the actual tools. `obsidian`, `ob`, `defuddle`, and `knap` are not bundled and remain subject to the current DSH session's permissions and approvals.
+The skill files do not contain the tools themselves. In use, DSH calls the locally installed `obsidian`, `ob`, `defuddle`, and `knap` through the session shell or existing native tools; those calls remain subject to DSH permissions and approvals.
 
 ## Install
 
@@ -60,10 +64,6 @@ An update fetches the tag for the selected release, creates a backup, and **repl
 
 ## Source and license
 
-Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License.
+Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; see [LICENSE.upstream](LICENSE.upstream). This plugin packages the skills without modifying their text. The icon is the original upstream asset; Obsidian is a trademark of Dynalist Inc., and this is an unofficial project.
 
-The plugin icon comes from the upstream `plugins/obsidian/assets/icon.png` and keeps its transparent background. The icon is included in the MIT-licensed upstream repository, but the Obsidian name, logo, and app icon are trademarks. The [Obsidian brand guidelines](https://obsidian.md/brand) require the mark to remain unmodified and direct commercial use to Obsidian. This unofficial plugin is not affiliated with or endorsed by Obsidian.
-
-The plugin only packages and updates the skills; it does not modify the upstream skill bodies. See [LICENSE.upstream](LICENSE.upstream) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-DeepSeek assisted during development. See [CONTRIBUTORS.md](CONTRIBUTORS.md) for attribution and the GitHub Contributors limitation.
+DeepSeek assisted during development; see [CONTRIBUTORS.md](CONTRIBUTORS.md).

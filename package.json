@@ -1,6 +1,6 @@
 {
   "name": "obsidian-skills-for-dsh",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Obsidian's official agent skills for DeepSeek Harness: Markdown, Bases, Canvas, CLI, Headless, Defuddle, and Knap.",
   "type": "module",
   "main": "index.js",

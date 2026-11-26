@@ -8,13 +8,17 @@
 
 Obsidian은 아직 DeepSeek Harness 플러그인을 제공하지 않습니다. 이 저장소는 DSH 쪽을 보완합니다. 공식 스킬 원문을 재사용하고 DSH 플러그인 매니페스트, 업스트림 버전 확인, 전체 트리 업데이트를 추가합니다.
 
+## 업스트림과 정렬
+
+업스트림 `1.2.3` 기준 공식 README의 플러그인 항목에는 Claude, ChatGPT/Codex, Cursor, Grok Bot, Hermes Agent가 있습니다. 설치 안내에는 Claude Code, Codex, npx skills, Gemini CLI, OpenCode도 포함됩니다. 지원 범위는 업스트림 릴리스에 따라 바뀌므로 [업스트림 설치 안내](https://github.com/obsidianmd/obsidian-skills#installation)를 기준으로 확인하세요. 이 저장소는 해당 클라이언트 설정을 복제하지 않고 DeepSeek Harness 항목만 보완합니다.
+
 ## 특징
 
-- **가벼움**: 스킬 7개만 등록하며 외부 프로세스를 실행하지 않습니다.
-- **스킬만 포함**: Obsidian, Defuddle, Knap 명령줄 도구를 포함하지 않습니다.
+- **가벼움**: 업스트림 스킬만 등록하며 외부 프로세스를 실행하지 않습니다.
+- **로컬 도구 사용**: CLI 바이너리를 포함하지 않으며, 스킬이 DSH 세션을 통해 로컬에 설치된 `obsidian`, `ob`, `defuddle`, `knap`을 호출합니다.
 - **깔끔함**: MCP 서버, 백그라운드 상주 프로세스, 텔레메트리, 자격 증명이 없습니다. GitHub는 버전 확인과 업데이트 때만 접근합니다.
 - **추적 가능**: 내장된 업스트림 버전과 commit을 기록합니다.
-- **업데이트 가능**: 최신 업스트림 GitHub Release를 확인하고 해당 Release로 업데이트할 수 있습니다.
+- **업데이트 가능**: 최신 업스트림 GitHub Release를 확인하고 해당 Release로 업데이트할 수 있으며, 새 스킬도 전체 트리 동기화로 함께 추가됩니다.
 
 ## 포함된 스킬
 
@@ -28,7 +32,7 @@ Obsidian은 아직 DeepSeek Harness 플러그인을 제공하지 않습니다. �
 | `defuddle` | 웹 페이지에서 깨끗한 Markdown 추출 |
 | `knap` | JSON/CSV 데이터로 Markdown 템플릿 렌더링 |
 
-스킬은 설명만 제공하며 실제 도구를 포함하지 않습니다. `obsidian`, `ob`, `defuddle`, `knap`은 포함되지 않으며, 현재 DSH 세션의 권한과 승인 규칙을 따릅니다.
+스킬 파일에는 도구가 포함되지 않습니다. 사용 시 DSH가 세션 셸 또는 기존 네이티브 도구를 통해 로컬에 설치된 `obsidian`, `ob`, `defuddle`, `knap`을 호출하며, DSH 권한과 승인 규칙을 따릅니다.
 
 ## 설치
 
@@ -60,10 +64,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## 출처 및 라이선스
 
-업스트림: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License.
-
-플러그인 아이콘은 업스트림 `plugins/obsidian/assets/icon.png`에서 가져왔으며 투명 배경을 유지합니다. 아이콘은 MIT 라이선스 저장소에 포함되어 있지만 Obsidian 이름, 로고, 앱 아이콘은 상표입니다. [Obsidian 브랜드 가이드라인](https://obsidian.md/brand)에 따라 편집, 변형, 재색칠하지 않아야 하며 상업적 사용은 Obsidian에 문의해야 합니다. 이 비공식 플러그인은 Obsidian과 제휴하거나 Obsidian의 보증을 받지 않았습니다.
-
-이 플러그인은 스킬 패키징과 업데이트만 담당하며 업스트림 스킬 본문은 수정하지 않습니다. 자세한 내용은 [LICENSE.upstream](LICENSE.upstream)과 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)를 참고하세요.
+업스트림: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; [LICENSE.upstream](LICENSE.upstream)을 참고하세요. 이 플러그인은 스킬만 패키징하며 업스트림 본문을 수정하지 않습니다. 아이콘은 업스트림 원본이며 Obsidian은 Dynalist Inc.의 상표입니다. 이 프로젝트는 비공식입니다.
 
 개발에는 DeepSeek이 참여했습니다. 기여 표기와 GitHub Contributors 제한은 [CONTRIBUTORS.md](CONTRIBUTORS.md)를 참고하세요.

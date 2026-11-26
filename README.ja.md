@@ -2,19 +2,23 @@
 
 [中文](README.md) | [English](README.en.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
-[Obsidian 公式 Agent Skills](https://github.com/obsidianmd/obsidian-skills) の 7 スキルを、DeepSeek Harness プラグインとして軽量にパッケージします。プラグイン詳細ページで上流バージョンを確認し、選択した Release に更新できます。
+[Obsidian 公式 Agent Skills](https://github.com/obsidianmd/obsidian-skills) のスキルを、DeepSeek Harness プラグインとして軽量にパッケージします。プラグイン詳細ページで上流バージョンを確認し、選択した Release に更新できます。
 
 ## DSH 専用版を用意した理由
 
 Obsidian はまだ DeepSeek Harness プラグインを提供していません。このリポジトリは DSH 側を補完し、公式スキルの原文を再利用して DSH プラグインマニフェスト、上流バージョン確認、ツリー全体の更新を追加します。
 
+## 上流との整合
+
+上流 `1.2.3` 時点の公式 README では、Claude、ChatGPT/Codex、Cursor、Grok Bot、Hermes Agent がプラグイン入口として案内されています。インストール手順には Claude Code、Codex、npx skills、Gemini CLI、OpenCode も含まれます。対応範囲は上流リリースごとに変わるため、[上流のインストール手順](https://github.com/obsidianmd/obsidian-skills#installation)を正としてください。このリポジトリは各クライアント設定を複製せず、DeepSeek Harness の入口だけを補完します。
+
 ## 特長
 
-- **軽量**：7 つのスキルを登録するだけで、外部プロセスを起動しません。
-- **スキルのみ同梱**：Obsidian、Defuddle、Knap の CLI ツールは同梱しません。
+- **軽量**：上流のスキルのみを登録し、外部プロセスを起動しません。
+- **ローカルツールを使用**：CLI バイナリは同梱せず、DSH セッション経由でローカルにインストールされた `obsidian`、`ob`、`defuddle`、`knap` を呼び出します。
 - **クリーン**：MCP サーバー、常駐プロセス、テレメトリー、認証情報はありません。GitHub へのアクセスはバージョン確認と更新時だけです。
 - **追跡可能**：同梱している上流バージョンと commit を記録します。
-- **更新可能**：上流の最新 GitHub Release を確認し、その Release に更新できます。
+- **更新可能**：上流の最新 GitHub Release を確認し、その Release に更新できます。新しいスキルもツリー全体の同期で追加されます。
 
 ## 含まれるスキル
 
@@ -28,7 +32,7 @@ Obsidian はまだ DeepSeek Harness プラグインを提供していません�
 | `defuddle` | Web ページから読みやすい Markdown を抽出 |
 | `knap` | JSON/CSV データから Markdown テンプレートをレンダリング |
 
-スキルは説明のみを提供し、実際のツールは含みません。`obsidian`、`ob`、`defuddle`、`knap` は同梱されず、現在の DSH セッションの権限と承認ルールに従います。
+スキルファイルにツールは含まれません。使用時は DSH がセッションのシェルまたは既存のネイティブツール経由で、ローカルにインストールされた `obsidian`、`ob`、`defuddle`、`knap` を呼び出します。これらの呼び出しは DSH の権限と承認に従います。
 
 ## インストール
 
@@ -60,10 +64,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## 出典とライセンス
 
-上流：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)、MIT License。
-
-プラグインのアイコンは上流 `plugins/obsidian/assets/icon.png` を使用し、透明背景を保持しています。アイコンは MIT ライセンスの上流リポジトリに含まれますが、Obsidian の名称、ロゴ、アプリアイコンは商標です。[Obsidian ブランドガイドライン](https://obsidian.md/brand)に従い、編集、改変、再着色はせず、商用利用は Obsidian に問い合わせる必要があります。この非公式プラグインは Obsidian と提携しておらず、承認も受けていません。
-
-このプラグインはスキルのパッケージと更新のみを担当し、上流スキルの本文は変更しません。詳細は [LICENSE.upstream](LICENSE.upstream) と [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) を参照してください。
+上流：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)、MIT License。[LICENSE.upstream](LICENSE.upstream) を参照してください。このプラグインはスキルのみをパッケージし、上流の本文は変更しません。アイコンは上流の原本で、Obsidian は Dynalist Inc. の商標です。このプロジェクトは非公式です。
 
 開発には DeepSeek が参加しました。クレジットと GitHub Contributors の制約は [CONTRIBUTORS.md](CONTRIBUTORS.md) を参照してください。
