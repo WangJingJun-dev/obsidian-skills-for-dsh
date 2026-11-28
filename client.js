@@ -1,12 +1,12 @@
 window.__ModuleLoader__.load({
-  id: 'obsidian-skills-for-dsh',
+  id: 'obsidian-for-dsh',
   factory(require) {
     const React = require('react')
     const h = React.createElement
 
-    const PACKAGE_NAME = 'obsidian-skills-for-dsh'
-    const STATUS_PATH = '/obsidian-skills-for-dsh/upstream.json'
-    const UPDATE_PATH = '/obsidian-skills-for-dsh/update'
+    const PACKAGE_NAME = 'obsidian-for-dsh'
+    const STATUS_PATH = '/obsidian-for-dsh/upstream.json'
+    const UPDATE_PATH = '/obsidian-for-dsh/update'
     const ERROR_CODES = new Set([
       'timeout',
       'rate-limited',
@@ -215,7 +215,7 @@ window.__ModuleLoader__.load({
           if (!response.ok || payload?.ok !== true) {
             if (payload?.bundled) setData(payload)
             console.warn(
-              '[obsidian-skills] upstream check failed',
+              '[obsidian-for-dsh] upstream check failed',
               payload?.error ?? text.slice(0, 200),
             )
             throw new Error(payload?.code ?? 'bad-response')
@@ -229,7 +229,7 @@ window.__ModuleLoader__.load({
               ? error.message
               : 'unknown'
           if (code !== 'timeout') {
-            console.warn('[obsidian-skills] upstream check failed', error)
+            console.warn('[obsidian-for-dsh] upstream check failed', error)
           }
           setFailure(code)
         } finally {
@@ -251,7 +251,7 @@ window.__ModuleLoader__.load({
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
-              'X-Obsidian-Skills-Update': '1',
+              'X-Obsidian-For-Dsh-Update': '1',
             },
             body: '{}',
             signal: controller.signal,
@@ -266,7 +266,7 @@ window.__ModuleLoader__.load({
           if (!response.ok || payload?.ok !== true) {
             if (payload?.bundled) setData(payload)
             console.warn(
-              '[obsidian-skills] upstream update failed',
+              '[obsidian-for-dsh] upstream update failed',
               payload?.error ?? text.slice(0, 200),
             )
             throw new Error(payload?.code ?? 'update-failed')
@@ -277,7 +277,7 @@ window.__ModuleLoader__.load({
           const code = error instanceof Error && ERROR_CODES.has(error.message)
             ? error.message
             : 'update-failed'
-          console.warn('[obsidian-skills] upstream update failed', error)
+          console.warn('[obsidian-for-dsh] upstream update failed', error)
           setUpdateFailure(code)
         } finally {
           setUpdating(false)
@@ -497,11 +497,11 @@ window.__ModuleLoader__.load({
       apply(ctx) {
         ctx.effect(
           () => ctx.locale.register('obsidianUpstream', 'en', STRINGS.en),
-          'obsidian-skills: upstream version strings (en)',
+          'obsidian-for-dsh: upstream version strings (en)',
         )
         ctx.effect(
           () => ctx.locale.register('obsidianUpstream', 'zh', STRINGS.zh),
-          'obsidian-skills: upstream version strings (zh)',
+          'obsidian-for-dsh: upstream version strings (zh)',
         )
         const t = ctx.locale.bind('obsidianUpstream')
         ctx.slots.inject('plugins.detail.section', () => ctx.slots.register({

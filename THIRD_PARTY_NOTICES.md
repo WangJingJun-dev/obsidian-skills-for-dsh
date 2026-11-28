@@ -16,5 +16,5 @@ Inc. The [Obsidian brand guidelines](https://obsidian.md/brand) require the
 mark to remain unmodified and direct commercial use to Obsidian. This
 unofficial DSH plugin is not affiliated with or endorsed by Obsidian.
 
-`obsidian-skills-for-dsh` only packages and updates the skills; it does not
-modify the upstream skill bodies.
+`obsidian-for-dsh` packages the official skills and includes native tool wrappers;
+it does not modify the upstream skill bodies.

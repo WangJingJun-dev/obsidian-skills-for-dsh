@@ -1,12 +1,12 @@
-# Obsidian Skills for DSH
+# Obsidian for DSH
 
 [中文](README.md) | [English](README.en.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
-A lightweight DeepSeek Harness plugin for the [official Obsidian agent skills](https://github.com/obsidianmd/obsidian-skills). The plugin detail page checks the upstream version and can update the skills to a selected release.
+A DeepSeek Harness plugin that wraps the official Obsidian CLI as native DSH tools and packages the official Obsidian agent skills. The plugin detail page checks the upstream version and can update the skills to a selected release.
 
 ## Why a DSH-specific build
 
-Obsidian does not currently provide a DeepSeek Harness plugin. This repository fills that gap: it reuses the official skill text and adds the DSH bundle manifest, upstream version checks, and full-tree updates.
+Obsidian does not currently provide a DeepSeek Harness plugin. This repository adds the missing layer: seven `obsidian_*` native tools, the official skill text, upstream version checks, and full-tree updates.
 
 ## Alignment with upstream
 
@@ -14,8 +14,8 @@ As of upstream `1.2.3`, the official README lists plugin entries for Claude, Cha
 
 ## Highlights
 
-- **Lightweight**: registers the upstream skills and starts no external process.
-- **Uses local tools**: does not bundle CLI binaries; skills call the locally installed `obsidian`, `ob`, `defuddle`, and `knap` through the DSH session.
+- **Native tools**: registers seven `obsidian_*` tools that call the local Obsidian CLI.
+- **Official skills**: packages every upstream agent skill and updates the tree from a release.
 - **Clean**: no MCP server, background daemon, telemetry, or credentials; GitHub is contacted only for version checks or updates.
 - **Traceable**: records the included upstream version and commit.
 - **Updatable**: checks the latest upstream GitHub Release and can update to that release; new skills arrive with the full-tree sync.
@@ -32,14 +32,28 @@ As of upstream `1.2.3`, the official README lists plugin entries for Claude, Cha
 | `defuddle` | Extract clean Markdown from web pages |
 | `knap` | Render Markdown templates from JSON or CSV data |
 
-The skill files do not contain the tools themselves. In use, DSH calls the locally installed `obsidian`, `ob`, `defuddle`, and `knap` through the session shell or existing native tools; those calls remain subject to DSH permissions and approvals.
+The skill files do not contain the tools themselves. Native tools call the local Obsidian CLI through `obsidian_*`; Defuddle, Knap, and similar skills call locally installed commands through the session shell or existing native tools. Those calls remain subject to DSH permissions and approvals.
+
+## Native tools
+
+| Tool | Purpose |
+|---|---|
+| `obsidian_vault` | Vault info, files/folders, search, tags, properties, Bases, workspace |
+| `obsidian_note` | Read/create/append/move/rename/delete notes; outline, links, daily notes, templates |
+| `obsidian_property` | Read, write, or remove one frontmatter property |
+| `obsidian_base` | List, inspect, query, and create Bases entries |
+| `obsidian_task` | Markdown tasks, TaskNotes, time tracking, pomodoro |
+| `obsidian_plugin` | Plugins, commands, hotkeys, enable/disable, reload |
+| `obsidian_cli` | Escape hatch for arbitrary Obsidian CLI commands |
+
+The plugin also registers the `Obsidian CLI Behavior Contract` system prompt and the `/obsidian-status` command.
 
 ## Install
 
 In DSH, open **Plugins**, choose **Add plugin**, and enter:
 
 ```text
-https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
+https://github.com/WangJingJun-dev/obsidian-for-dsh
 ```
 
 Open a new session after installation so the skill catalog loads. If another plugin registers a skill with the same name, DSH keeps one according to its registration precedence.
@@ -64,6 +78,6 @@ An update fetches the tag for the selected release, creates a backup, and **repl
 
 ## Source and license
 
-Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; see [LICENSE.upstream](LICENSE.upstream). This plugin packages the skills without modifying their text. The icon is the original upstream asset; Obsidian is a trademark of Dynalist Inc., and this is an unofficial project.
+Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; see [LICENSE.upstream](LICENSE.upstream). This plugin wraps the official Obsidian CLI and packages the official skills without modifying their text. The icon is the original upstream asset; Obsidian is a trademark of Dynalist Inc., and this is an unofficial project.
 
 DeepSeek assisted during development; see [CONTRIBUTORS.md](CONTRIBUTORS.md).

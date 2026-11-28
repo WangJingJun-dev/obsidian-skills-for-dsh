@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: obsidian-skills-sync
+  group: obsidian-for-dsh-sync
   cancel-in-progress: false
 
 jobs:

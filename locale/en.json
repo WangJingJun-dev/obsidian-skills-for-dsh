@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Obsidian skills",
-    "description": "Adds Obsidian's official agent skills for Obsidian Flavored Markdown, Bases, JSON Canvas, the Obsidian CLI, Obsidian Headless, Defuddle, and Knap. The plugin detail page shows the included upstream skill version, checks the latest obsidianmd/obsidian-skills GitHub Release, and can update to that release. The update replaces the complete skill tree so additions, edits, and deletions match the release. Skills do not include the tools; DSH calls locally installed commands through the shell or existing native tools."
+    "title": "Obsidian for DSH",
+    "description": "Native DSH tools for the official Obsidian CLI plus the official Obsidian agent skills: Markdown, Bases, JSON Canvas, the Obsidian CLI, Obsidian Headless, Defuddle, and Knap. The plugin detail page shows the included upstream skill version, checks the latest GitHub Release, and can update to that release. The update replaces the complete skill tree. Native tools run through the local Obsidian CLI; other skill commands still need their own tools and permissions."
   }
 }

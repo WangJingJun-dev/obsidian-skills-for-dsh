@@ -39,7 +39,7 @@ test('compares plain semantic versions', () => {
 })
 
 test('checks and synchronizes a newer upstream package into a target package', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'obsidian-skills-sync-'))
+  const root = await mkdtemp(join(tmpdir(), 'obsidian-for-dsh-sync-'))
   try {
     await writeFixture(root, '1.2.1', 'obsidian-markdown', '# New skill body\n')
     const check = await checkUpstream(join(root, 'upstream'), { targetRoot: join(root, 'target') })
@@ -59,7 +59,7 @@ test('checks and synchronizes a newer upstream package into a target package', a
 })
 
 test('refuses to downgrade a packaged version', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'obsidian-skills-downgrade-'))
+  const root = await mkdtemp(join(tmpdir(), 'obsidian-for-dsh-downgrade-'))
   try {
     await writeFixture(root, '1.1.9', 'knap', '# Older\n')
     await assert.rejects(
@@ -72,7 +72,7 @@ test('refuses to downgrade a packaged version', async () => {
 })
 
 test('reads the pinned upstream commit when the source is a Git checkout', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'obsidian-skills-commit-'))
+  const root = await mkdtemp(join(tmpdir(), 'obsidian-for-dsh-commit-'))
   try {
     await writeFixture(root, '1.2.0', 'knap', '# Pinned\n')
     const source = join(root, 'upstream')

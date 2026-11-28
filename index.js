@@ -6,12 +6,13 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import { parse } from 'yaml'
+import { registerNativeTools } from './lib/native.js'
 
-export const name = 'obsidian-skills'
-export const inject = ['skills']
+export const name = 'obsidian'
+export const inject = ['skills', 'tools', 'subprocess']
 
-export const UPSTREAM_ROUTE = '/obsidian-skills-for-dsh/upstream.json'
-export const UPSTREAM_UPDATE_ROUTE = '/obsidian-skills-for-dsh/update'
+export const UPSTREAM_ROUTE = '/obsidian-for-dsh/upstream.json'
+export const UPSTREAM_UPDATE_ROUTE = '/obsidian-for-dsh/update'
 export const UPSTREAM_REPOSITORY = 'obsidianmd/obsidian-skills'
 export const UPSTREAM_RELEASES_URL = `https://api.github.com/repos/${UPSTREAM_REPOSITORY}/releases/latest`
 
@@ -21,7 +22,7 @@ const SYNC_SCRIPT = join(PACKAGE_ROOT, 'scripts', 'sync-upstream.mjs')
 const execFileAsync = promisify(execFile)
 const UPDATE_TIMEOUT_MS = 90_000
 
-const PROVIDER_NAME = 'obsidian-skills'
+const PROVIDER_NAME = 'obsidian'
 const SKILL_RANK = 600
 const SKILLS_ROOT = fileURLToPath(new URL('./skills/', import.meta.url))
 const SKILL_NAME = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -145,7 +146,7 @@ async function readLatestRelease({ refresh = false, fetchImpl = fetch, now = Dat
   const response = await fetchImpl(UPSTREAM_RELEASES_URL, {
     headers: {
       Accept: 'application/vnd.github+json',
-      'User-Agent': 'obsidian-skills-for-dsh',
+      'User-Agent': 'obsidian-for-dsh',
     },
     signal: AbortSignal.timeout(10_000),
   })
@@ -377,7 +378,7 @@ export async function handleUpdateRequest(request, response, invalidate = () => 
     writeJson(response, 403, { ok: false, code: 'forbidden' })
     return
   }
-  if (request.headers['x-obsidian-skills-update'] !== '1') {
+  if (request.headers['x-obsidian-for-dsh-update'] !== '1') {
     writeJson(response, 403, { ok: false, code: 'forbidden' })
     return
   }
@@ -426,8 +427,9 @@ export async function handleUpdateRequest(request, response, invalidate = () => 
   }
 }
 
-export function apply(ctx) {
+export function apply(ctx, config) {
   loadSkills()
+  registerNativeTools(ctx, config)
   let invalidateSkills = () => {}
 
   ctx.skills.registerProvider((control) => {
@@ -452,12 +454,12 @@ export function apply(ctx) {
         kind: 'exact',
         path: UPSTREAM_ROUTE,
         resource: handleUpstreamRequest,
-      }), 'obsidian-skills: upstream version route')
+      }), 'obsidian-for-dsh: upstream version route')
       webCtx.effect(() => webServer.register({
         kind: 'exact',
         path: UPSTREAM_UPDATE_ROUTE,
         handler: (request, response) => handleUpdateRequest(request, response, invalidateSkills),
-      }), 'obsidian-skills: upstream update route')
+      }), 'obsidian-for-dsh: upstream update route')
     })
   }
 }

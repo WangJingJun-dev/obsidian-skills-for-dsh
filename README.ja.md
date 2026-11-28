@@ -1,12 +1,12 @@
-# Obsidian Skills for DSH
+# Obsidian for DSH
 
 [中文](README.md) | [English](README.en.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
-[Obsidian 公式 Agent Skills](https://github.com/obsidianmd/obsidian-skills) のスキルを、DeepSeek Harness プラグインとして軽量にパッケージします。プラグイン詳細ページで上流バージョンを確認し、選択した Release に更新できます。
+Obsidian 公式 CLI を DSH ネイティブツールとしてラップし、Obsidian 公式 Agent Skills をパッケージします。プラグイン詳細ページで上流バージョンを確認し、選択した Release に更新できます。
 
 ## DSH 専用版を用意した理由
 
-Obsidian はまだ DeepSeek Harness プラグインを提供していません。このリポジトリは DSH 側を補完し、公式スキルの原文を再利用して DSH プラグインマニフェスト、上流バージョン確認、ツリー全体の更新を追加します。
+Obsidian はまだ DeepSeek Harness プラグインを提供していません。このリポジトリは DSH 側を補完し、7 つの `obsidian_*` ネイティブツール、公式スキルの原文、上流バージョン確認、ツリー全体の更新を追加します。
 
 ## 上流との整合
 
@@ -14,8 +14,8 @@ Obsidian はまだ DeepSeek Harness プラグインを提供していません�
 
 ## 特長
 
-- **軽量**：上流のスキルのみを登録し、外部プロセスを起動しません。
-- **ローカルツールを使用**：CLI バイナリは同梱せず、DSH セッション経由でローカルにインストールされた `obsidian`、`ob`、`defuddle`、`knap` を呼び出します。
+- **ネイティブツール**：ローカル Obsidian CLI を呼び出す 7 つの `obsidian_*` ツールを登録します。
+- **公式スキル**：上流 Agent Skills 全体をパッケージし、Release に合わせてツリー全体を更新します。
 - **クリーン**：MCP サーバー、常駐プロセス、テレメトリー、認証情報はありません。GitHub へのアクセスはバージョン確認と更新時だけです。
 - **追跡可能**：同梱している上流バージョンと commit を記録します。
 - **更新可能**：上流の最新 GitHub Release を確認し、その Release に更新できます。新しいスキルもツリー全体の同期で追加されます。
@@ -32,14 +32,16 @@ Obsidian はまだ DeepSeek Harness プラグインを提供していません�
 | `defuddle` | Web ページから読みやすい Markdown を抽出 |
 | `knap` | JSON/CSV データから Markdown テンプレートをレンダリング |
 
-スキルファイルにツールは含まれません。使用時は DSH がセッションのシェルまたは既存のネイティブツール経由で、ローカルにインストールされた `obsidian`、`ob`、`defuddle`、`knap` を呼び出します。これらの呼び出しは DSH の権限と承認に従います。
+スキルファイルにツールは含まれません。ネイティブツールは `obsidian_*` でローカル Obsidian CLI を呼び出し、Defuddle/Knap などのスキルはセッションのシェルまたは既存のネイティブツール経由でローカルコマンドを呼び出します。DSH の権限と承認に従います。
+
+ネイティブツール：`obsidian_vault`、`obsidian_note`、`obsidian_property`、`obsidian_base`、`obsidian_task`、`obsidian_plugin`、`obsidian_cli`。システムプロンプト `Obsidian CLI Behavior Contract` と `/obsidian-status` コマンドも登録します。
 
 ## インストール
 
 DSH の **プラグイン** で **プラグインを追加** を選び、次を入力します。
 
 ```text
-https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
+https://github.com/WangJingJun-dev/obsidian-for-dsh
 ```
 
 インストール後に新しいセッションを開き、スキルカタログを読み込みます。同名スキルを登録する別プラグインがある場合、DSH の登録優先順位により 1 つだけが残ります。
@@ -64,6 +66,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## 出典とライセンス
 
-上流：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)、MIT License。[LICENSE.upstream](LICENSE.upstream) を参照してください。このプラグインはスキルのみをパッケージし、上流の本文は変更しません。アイコンは上流の原本で、Obsidian は Dynalist Inc. の商標です。このプロジェクトは非公式です。
+上流：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)、MIT License。[LICENSE.upstream](LICENSE.upstream) を参照してください。このプラグインは公式 CLI をラップし、公式スキルをパッケージします。上流の本文は変更しません。アイコンは上流の原本で、Obsidian は Dynalist Inc. の商標です。このプロジェクトは非公式です。
 
 開発には DeepSeek が参加しました。クレジットと GitHub Contributors の制約は [CONTRIBUTORS.md](CONTRIBUTORS.md) を参照してください。

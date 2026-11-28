@@ -1,12 +1,12 @@
-# Obsidian Skills for DSH
+# Obsidian for DSH
 
 [中文](README.md) | [English](README.en.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
-把 [Obsidian 官方 Agent Skills](https://github.com/obsidianmd/obsidian-skills) 轻量打包为 DeepSeek Harness 插件。插件详情页可查看上游版本，并按 Release 更新技能。
+把 Obsidian 官方 CLI 封装为 DSH 原生工具，并打包 Obsidian 官方 Agent Skills。插件详情页可查看上游版本，并按 Release 更新技能。
 
 ## 为什么单独做 DSH 版本
 
-Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：复用官方技能原文，增加 DSH 插件清单、上游版本检查和整树更新。
+Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：提供 7 个 `obsidian_*` 原生工具、官方技能原文，以及上游版本检查和整树更新。
 
 ## 与上游对齐
 
@@ -14,8 +14,8 @@ Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：�
 
 ## 特点
 
-- **轻量**：仅注册上游提供的技能，不启动外部进程。
-- **使用本机工具**：不捆绑 CLI 二进制；技能会通过 DSH 会话调用本机已安装的 `obsidian`、`ob`、`defuddle`、`knap`。
+- **原生工具**：注册 7 个 `obsidian_*` 工具，直接调用本机 Obsidian CLI。
+- **官方技能**：打包上游提供的全部 Agent Skills，并随 Release 整树更新。
 - **干净**：无 MCP、无后台常驻、无遥测、无凭据；只有检查或更新时访问 GitHub。
 - **可追溯**：记录内置上游版本和对应 commit。
 - **可更新**：详情页检查上游 GitHub Release，并可更新到所选版本；新增技能会随整树同步加入。
@@ -32,14 +32,28 @@ Obsidian 尚未提供 DeepSeek Harness 插件版。本仓库补齐这一端：�
 | `defuddle` | 从网页提取干净的 Markdown |
 | `knap` | 用 JSON/CSV 数据渲染 Markdown 模板 |
 
-技能文件不包含工具本身。实际使用时，DSH 会通过当前会话的 shell 或已有原生工具调用本机安装的 `obsidian`、`ob`、`defuddle`、`knap`；这些调用受 DSH 权限和审批约束。
+技能文件不包含工具本身。原生工具通过 DSH 的 `obsidian_*` 调用本机 Obsidian CLI；Defuddle、Knap 等技能仍通过当前会话的 shell 或已有原生工具调用本机安装的命令。这些调用受 DSH 权限和审批约束。
+
+## 原生工具
+
+| 工具 | 作用 |
+|---|---|
+| `obsidian_vault` | 仓库信息、文件/文件夹、全文搜索、标签、属性、Bases、工作区 |
+| `obsidian_note` | 读/建/追加/移动/重命名/删除笔记，大纲、链接、日记、模板 |
+| `obsidian_property` | 读写删单个 frontmatter 属性 |
+| `obsidian_base` | Bases 列表、视图、查询和新建条目 |
+| `obsidian_task` | Markdown 任务、TaskNotes、时间追踪、番茄钟 |
+| `obsidian_plugin` | 插件、命令、热键、启停和重载 |
+| `obsidian_cli` | 任意 Obsidian CLI 命令的兜底入口 |
+
+插件还注册系统提示 `Obsidian CLI Behavior Contract` 和命令 `/obsidian-status`。
 
 ## 安装
 
 在 DSH 的 **插件** 页选择 **添加插件**，输入：
 
 ```text
-https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
+https://github.com/WangJingJun-dev/obsidian-for-dsh
 ```
 
 安装后请新开一个会话，以加载技能目录。若已有其他插件注册同名技能，DSH 会按注册优先级只保留一个。
@@ -64,6 +78,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## 来源与许可
 
-上游：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)，MIT License；完整许可见 [LICENSE.upstream](LICENSE.upstream)。本插件只打包技能，不修改上游正文。图标取自上游原始素材；Obsidian 名称和图标是 Dynalist Inc. 的商标，本项目为非官方项目。
+上游：[obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills)，MIT License；完整许可见 [LICENSE.upstream](LICENSE.upstream)。本插件封装 Obsidian 官方 CLI 并提供官方技能，不修改上游技能正文。图标取自上游原始素材；Obsidian 名称和图标是 Dynalist Inc. 的商标，本项目为非官方项目。
 
 开发过程中使用了 DeepSeek 协助；署名和 GitHub Contributors 的限制见 [CONTRIBUTORS.md](CONTRIBUTORS.md)。

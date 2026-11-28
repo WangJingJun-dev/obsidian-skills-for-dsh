@@ -1,12 +1,12 @@
-# Obsidian Skills for DSH
+# Obsidian for DSH
 
 [中文](README.md) | [English](README.en.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | [Русский](README.ru.md)
 
-Легкий плагин DeepSeek Harness для [официальных Agent Skills Obsidian](https://github.com/obsidianmd/obsidian-skills). На странице плагина можно проверить версию upstream и обновить навыки до выбранного Release.
+Плагин DeepSeek Harness, который оборачивает официальный Obsidian CLI в нативные инструменты DSH и упаковывает официальные Agent Skills Obsidian. На странице плагина можно проверить версию upstream и обновить навыки до выбранного Release.
 
 ## Зачем отдельная версия для DSH
 
-Obsidian пока не предоставляет плагин для DeepSeek Harness. Этот репозиторий закрывает этот пробел: он использует официальные тексты навыков и добавляет манифест плагина DSH, проверку версии upstream и обновление всего дерева навыков.
+Obsidian пока не предоставляет плагин для DeepSeek Harness. Этот репозиторий добавляет недостающий слой: семь нативных инструментов `obsidian_*`, официальные тексты навыков, проверку версии upstream и обновление всего дерева.
 
 ## Соответствие upstream
 
@@ -14,8 +14,8 @@ Obsidian пока не предоставляет плагин для DeepSeek H
 
 ## Особенности
 
-- **Легкость**: регистрирует только навыки upstream и не запускает внешние процессы.
-- **Использование локальных инструментов**: не включает CLI-бинарники; навыки вызывают локально установленные `obsidian`, `ob`, `defuddle` и `knap` через сессию DSH.
+- **Нативные инструменты**: регистрирует семь инструментов `obsidian_*`, вызывающих локальный Obsidian CLI.
+- **Официальные навыки**: упаковывает все навыки upstream и обновляет дерево из Release.
 - **Чистота**: без MCP-сервера, фонового демона, телеметрии и учетных данных; GitHub используется только для проверки версии и обновления.
 - **Прослеживаемость**: фиксирует версию upstream и соответствующий commit.
 - **Обновляемость**: проверяет последний GitHub Release upstream и позволяет обновиться до него; новые навыки добавляются при полной синхронизации дерева.
@@ -32,14 +32,16 @@ Obsidian пока не предоставляет плагин для DeepSeek H
 | `defuddle` | Извлечение чистого Markdown из веб-страниц |
 | `knap` | Рендеринг Markdown-шаблонов из данных JSON/CSV |
 
-Файлы навыков не содержат сами инструменты. При использовании DSH вызывает локально установленные `obsidian`, `ob`, `defuddle` и `knap` через оболочку сессии или существующие нативные инструменты; вызовы подчиняются разрешениям и подтверждениям DSH.
+Файлы навыков не содержат сами инструменты. Нативные инструменты вызывают локальный Obsidian CLI через `obsidian_*`; навыки Defuddle/Knap вызывают локальные команды через оболочку сессии или существующие нативные инструменты. Вызовы подчиняются разрешениям и подтверждениям DSH.
+
+Нативные инструменты: `obsidian_vault`, `obsidian_note`, `obsidian_property`, `obsidian_base`, `obsidian_task`, `obsidian_plugin`, `obsidian_cli`. Плагин также регистрирует системный промпт `Obsidian CLI Behavior Contract` и команду `/obsidian-status`.
 
 ## Установка
 
 В DSH откройте **Плагины**, выберите **Добавить плагин** и введите:
 
 ```text
-https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
+https://github.com/WangJingJun-dev/obsidian-for-dsh
 ```
 
 После установки откройте новую сессию, чтобы загрузился каталог навыков. Если другой плагин регистрирует навык с тем же именем, DSH оставляет один согласно приоритету регистрации.
@@ -64,6 +66,6 @@ https://github.com/WangJingJun-dev/obsidian-skills-for-dsh
 
 ## Источник и лицензия
 
-Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; см. [LICENSE.upstream](LICENSE.upstream). Плагин только упаковывает навыки и не изменяет их тексты. Иконка взята из upstream; Obsidian — товарный знак Dynalist Inc., проект неофициальный.
+Upstream: [obsidianmd/obsidian-skills](https://github.com/obsidianmd/obsidian-skills), MIT License; см. [LICENSE.upstream](LICENSE.upstream). Плагин оборачивает официальный CLI и упаковывает официальные навыки, не изменяя их тексты. Иконка взята из upstream; Obsidian — товарный знак Dynalist Inc., проект неофициальный.
 
 В разработке участвовал DeepSeek. Атрибуция и ограничение GitHub Contributors описаны в [CONTRIBUTORS.md](CONTRIBUTORS.md).

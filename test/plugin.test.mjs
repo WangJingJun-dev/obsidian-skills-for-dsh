@@ -29,25 +29,27 @@ function loadProvider() {
         return () => {}
       },
     },
+    tools: { register() {} },
+    subprocess: {},
   })
   assert.equal(typeof factory, 'function')
   return factory()
 }
 
 test('exports the skill service injection and stable plugin name', () => {
-  assert.equal(name, 'obsidian-skills')
-  assert.deepEqual(inject, ['skills'])
+  assert.equal(name, 'obsidian')
+  assert.deepEqual(inject, ['skills', 'tools', 'subprocess'])
 })
 
 test('registers all packaged upstream skills with working resource paths', async () => {
   const provider = loadProvider()
-  assert.equal(provider.name, 'obsidian-skills')
+  assert.equal(provider.name, 'obsidian')
   const candidates = await provider.list()
   assert.deepEqual(candidates.map((candidate) => candidate.name).sort(), expectedSkills)
   assert.ok(candidates.length > 0)
 
   for (const candidate of candidates) {
-    assert.equal(candidate.provider, 'obsidian-skills')
+    assert.equal(candidate.provider, 'obsidian')
     assert.equal(candidate.source, 'bundled')
     assert.equal(candidate.rank, 600)
     assert.deepEqual(candidate.invocation, { modelInvocable: true, userInvocable: true })
@@ -57,7 +59,7 @@ test('registers all packaged upstream skills with working resource paths', async
 
     const skill = await provider.get(candidate)
     assert.equal(skill.name, candidate.name)
-    assert.equal(skill.provider, 'obsidian-skills')
+    assert.equal(skill.provider, 'obsidian')
     assert.ok(skill.content.length > 100)
     assert.ok(!skill.content.startsWith('---'))
     assert.ok(existsSync(join(dirname(skill.path), 'SKILL.md')))
@@ -82,12 +84,14 @@ test('keeps manifest, upstream record, locales, and icon aligned', () => {
   const en = JSON.parse(readFileSync(join(packageRoot, 'locale', 'en.json'), 'utf8'))
   const zh = JSON.parse(readFileSync(join(packageRoot, 'locale', 'zh.json'), 'utf8'))
 
-  assert.equal(manifest.name, 'obsidian-skills-for-dsh')
+  assert.equal(manifest.name, 'obsidian-for-dsh')
   assert.equal(manifest.version, upstream.version)
   assert.equal(manifest.dsh.bundle.patch, './cordis.patch.yml')
   assert.equal(manifest.dsh.client.platform, 'web')
   assert.equal(manifest.exports['./client'], './client.js')
   assert.equal(manifest.files.includes('client.js'), true)
+  assert.equal(manifest.files.includes('lib'), true)
+  assert.equal(manifest.files.includes('assets'), true)
   assert.equal(manifest.files.includes('icon.png'), true)
   assert.equal(manifest.exports['./icon'], './icon.png')
   assert.ok(manifest.files.includes('skills'))
@@ -98,7 +102,7 @@ test('keeps manifest, upstream record, locales, and icon aligned', () => {
   assert.deepEqual([...icon.subarray(0, 8)], [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
   assert.equal(icon[25], 6)
   assert.ok(icon.byteLength <= 256 * 1024)
-  assert.ok(readFileSync(join(packageRoot, 'client.js'), 'utf8').includes("id: 'obsidian-skills-for-dsh'"))
+  assert.ok(readFileSync(join(packageRoot, 'client.js'), 'utf8').includes("id: 'obsidian-for-dsh'"))
 })
 
 test('compares and exposes the bundled upstream release', () => {
@@ -146,12 +150,41 @@ test('keeps the five public README languages linked', () => {
   const readmes = ['README.md', 'README.en.md', 'README.ko.md', 'README.ja.md', 'README.ru.md']
   for (const readme of readmes) {
     const text = readFileSync(join(packageRoot, readme), 'utf8')
-    assert.ok(text.startsWith('# Obsidian Skills for DSH'))
+    assert.ok(text.startsWith('# Obsidian for DSH'))
     for (const linked of readmes) assert.ok(text.includes(`(${linked})`), `${readme}: missing ${linked}`)
     assert.ok(text.includes('CONTRIBUTORS.md'), `${readme}: missing contributor credit`)
   }
   assert.ok(readFileSync(join(packageRoot, 'CONTRIBUTORS.md'), 'utf8').includes('deepseek-ai'))
-  assert.ok(readFileSync(join(packageRoot, 'README.md'), 'utf8').includes('轻量'))
+  assert.ok(readFileSync(join(packageRoot, 'README.md'), 'utf8').includes('原生工具'))
+})
+
+test('registers native tools, system prompt and status command', () => {
+  const state = { tools: [], sections: [], commands: [] }
+  apply({
+    skills: { registerProvider() {} },
+    tools: { register(tool) { state.tools.push(tool) } },
+    subprocess: {},
+    inject(services, callback) {
+      const scope = {}
+      if (services.includes('systemPrompt')) {
+        scope.systemPrompt = { section(entry) { state.sections.push(entry) } }
+      }
+      if (services.includes('commands')) {
+        scope.commands = { register(command) { state.commands.push(command) } }
+      }
+      callback(scope)
+    },
+  })
+
+  assert.equal(state.tools.length, 7)
+  assert.deepEqual(
+    state.tools.map((tool) => tool.name).sort(),
+    ['obsidian_base', 'obsidian_cli', 'obsidian_note', 'obsidian_plugin', 'obsidian_property', 'obsidian_task', 'obsidian_vault'],
+  )
+  assert.equal(state.sections.length, 1)
+  assert.equal(state.sections[0].name, 'OBSIDIAN_CLI_BEHAVIOR_CONTRACT')
+  assert.equal(state.commands.length, 1)
+  assert.equal(state.commands[0].name, 'obsidian-status')
 })
 
 test('registers the host endpoints for the plugin detail version section', () => {
@@ -168,6 +201,8 @@ test('registers the host endpoints for the plugin detail version section', () =>
         return () => {}
       },
     },
+    tools: { register() {} },
+    subprocess: {},
     inject(services, callback) {
       if (services.includes('webServer')) {
         callback({

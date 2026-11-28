@@ -1,7 +1,7 @@
 {
-  "name": "obsidian-skills-for-dsh",
+  "name": "obsidian-for-dsh",
   "version": "1.2.3",
-  "description": "Obsidian's official agent skills for DeepSeek Harness: Markdown, Bases, Canvas, CLI, Headless, Defuddle, and Knap.",
+  "description": "Obsidian CLI as native DSH tools, plus the official Obsidian agent skills.",
   "type": "module",
   "main": "index.js",
   "exports": {
@@ -16,6 +16,8 @@
     "index.js",
     "client.js",
     "cordis.patch.yml",
+    "lib",
+    "assets",
     "skills",
     "scripts",
     "locale/*.json",
@@ -28,26 +30,29 @@
     "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
-    "test": "node --test test/plugin.test.mjs test/sync-upstream.test.mjs test/update.test.mjs",
+    "test": "node --test test/plugin.test.mjs test/sync-upstream.test.mjs test/update.test.mjs test/tools.test.mjs",
     "check": "node --check index.js && npm test",
     "sync:upstream": "node scripts/sync-upstream.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WangJingJun-dev/obsidian-skills-for-dsh.git"
+    "url": "git+https://github.com/WangJingJun-dev/obsidian-for-dsh.git"
   },
-  "homepage": "https://github.com/WangJingJun-dev/obsidian-skills-for-dsh#readme",
+  "homepage": "https://github.com/WangJingJun-dev/obsidian-for-dsh#readme",
   "bugs": {
-    "url": "https://github.com/WangJingJun-dev/obsidian-skills-for-dsh/issues"
+    "url": "https://github.com/WangJingJun-dev/obsidian-for-dsh/issues"
   },
   "keywords": [
     "deepseek-harness",
     "dsh",
     "obsidian",
+    "obsidian-cli",
     "agent-skills",
     "markdown",
     "bases",
-    "canvas"
+    "canvas",
+    "tasknotes",
+    "hearth"
   ],
   "license": "MIT",
   "engines": {

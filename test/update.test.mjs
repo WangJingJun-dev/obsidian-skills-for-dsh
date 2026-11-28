@@ -95,7 +95,7 @@ function fakeResponse() {
 }
 
 test('updates a target by replacing the complete skill tree', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'obsidian-skills-update-test-'))
+  const root = await mkdtemp(join(tmpdir(), 'obsidian-for-dsh-update-test-'))
   try {
     const source = await makeRelease(root)
     const target = await makeTarget(root)
@@ -129,7 +129,7 @@ test('updates a target by replacing the complete skill tree', async () => {
 })
 
 test('refuses to update to the version already installed', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'obsidian-skills-update-noop-'))
+  const root = await mkdtemp(join(tmpdir(), 'obsidian-for-dsh-update-noop-'))
   try {
     const target = await makeTarget(root)
     await assert.rejects(
@@ -152,7 +152,7 @@ test('rejects non-POST and cross-origin update requests before any work', async 
     headers: {
       host: '127.0.0.1:62008',
       origin: 'https://evil.example',
-      'x-obsidian-skills-update': '1',
+      'x-obsidian-for-dsh-update': '1',
     },
   }, crossOrigin)
   assert.equal(crossOrigin.statusCode, 403)
