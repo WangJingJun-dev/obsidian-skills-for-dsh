@@ -8,7 +8,7 @@ import { promisify } from 'node:util'
 import { parse } from 'yaml'
 import { registerNativeTools } from './lib/native.js'
 
-export const name = 'obsidian'
+export const name = 'obsidian-for-dsh'
 export const inject = ['skills', 'tools', 'subprocess']
 
 export const UPSTREAM_ROUTE = '/obsidian-for-dsh/upstream.json'

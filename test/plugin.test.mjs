@@ -37,7 +37,7 @@ function loadProvider() {
 }
 
 test('exports the skill service injection and stable plugin name', () => {
-  assert.equal(name, 'obsidian')
+  assert.equal(name, 'obsidian-for-dsh')
   assert.deepEqual(inject, ['skills', 'tools', 'subprocess'])
 })
 
